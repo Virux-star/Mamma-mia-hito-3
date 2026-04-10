@@ -1,5 +1,5 @@
 import Header from "../componentes/header";
-import CardPizza from "../componentes/CardPizza";
+import CardPizza from "../componentes/cardpizza";
 import napolitana from "../assets/Para-la-masa-de-pizza-napolitana-8-hrs-fermentacion-Web-1-500x500.jpg";
 import española from "../assets/images (1).jpg";
 import pepperoni from "../assets/pizza-con-salami-chorizo-beacon.jpg";
