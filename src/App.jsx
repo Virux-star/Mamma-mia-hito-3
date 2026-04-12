@@ -11,10 +11,10 @@ function App() {
       <Navbar />
 
       <main className="container my-4 flex-grow-1">
-        { <Home /> }
+        { /*<Home /> }
         {/* <Login /> */}
         {/* <Register /> */}
-        {/*<Cart />} */}
+        { <Cart />}
       </main>
 
       <Footer />
