@@ -23,7 +23,7 @@ const Home = () => {
                 name={pizza.name}
                 price={pizza.price}
                 ingredients={pizza.ingredients}
-                img={pizza.img}
+                img={`http://localhost:5000${pizza.img}`}
               />
             </div>
           ))}

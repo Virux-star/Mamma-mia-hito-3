@@ -12,8 +12,8 @@ function App() {
       <Navbar />
 
       <main className="container my-4 flex-grow-1">
-        { <Home /> }
-        {/* <Pizza /> */}
+        { /* <Home /> */ }
+        {<Pizza />}
         {/* <Login /> */}
         {/* <Register /> */}
         {/* <Cart /> */}

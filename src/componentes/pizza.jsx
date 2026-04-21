@@ -15,11 +15,11 @@ const Pizza = () => {
     <div className="container mt-4">
       <h1>{pizza.name}</h1>
 
-      <img
-        src={pizza.img}
-        alt={pizza.name}
-        className="img-fluid"
-      />
+   <img
+  src={`http://localhost:5000${pizza.img}`}
+  alt={pizza.name}
+  className="img-fluid" 
+  />
 
       <p className="mt-3">{pizza.desc}</p>
 
