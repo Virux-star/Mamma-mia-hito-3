@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/Mamma-mia-hito-3/'
+  base: '/Mamma-mia/'
 })
