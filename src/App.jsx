@@ -9,11 +9,11 @@ import Pizza from "./pages/pizza";
 import Profile from "./pages/profile";
 import NotFound from "./pages/notfound";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="d-flex flex-column min-vh-100">
         <Navbar />
 
@@ -32,7 +32,7 @@ function App() {
 
         <Footer />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
