@@ -30,7 +30,7 @@ const Header = () => {
         />
 
         <p className="fs-4">
-          Tenemos las mejores pizzas del mundo 🍕
+          Tenemos las mejores pizzas del mundo
         </p>
       </div>
     </header>
