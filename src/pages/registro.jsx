@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Register = () => {
+  const { register } = useContext(UserContext);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -14,7 +17,7 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!form.email || !form.password || !form.confirmPassword) {
@@ -32,7 +35,16 @@ const Register = () => {
       return;
     }
 
-    alert("Registro exitoso 🎉");
+    try {
+      await register(form.email, form.password);
+
+      alert("Registro exitoso 🎉");
+
+    } catch (error) {
+      console.log(error);
+
+      alert("Error al registrarse");
+    }
   };
 
   return (
@@ -45,6 +57,7 @@ const Register = () => {
           type="email"
           name="email"
           placeholder="Email"
+          value={form.email}
           onChange={handleChange}
         />
 
@@ -53,6 +66,7 @@ const Register = () => {
           type="password"
           name="password"
           placeholder="Contraseña"
+          value={form.password}
           onChange={handleChange}
         />
 
@@ -61,6 +75,7 @@ const Register = () => {
           type="password"
           name="confirmPassword"
           placeholder="Confirmar contraseña"
+          value={form.confirmPassword}
           onChange={handleChange}
         />
 
