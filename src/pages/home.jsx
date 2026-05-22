@@ -26,13 +26,7 @@ const Home = () => {
                 name={pizza.name}
                 price={pizza.price}
                 ingredients={pizza.ingredients}
-                img={
-                  pizza.img?.startsWith("http")
-                    ? pizza.img
-                    : pizza.img?.startsWith("/")
-                    ? pizza.img
-                    : `http://localhost:5000${pizza.img}`
-                }
+                img={pizza.img}
               />
             </div>
           ))}

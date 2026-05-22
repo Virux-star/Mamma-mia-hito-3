@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { pizzas as pizzasData } from "../data/pizzas";
 
 const Pizza = () => {
   const [pizza, setPizza] = useState(null);
-
-  // 👇 NUEVO
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/pizzas/${id}`)
-      .then((res) => res.json())
-      .then((data) => setPizza(data));
+    const foundPizza = pizzasData.find((item) => item.id === id);
+    setPizza(foundPizza || null);
   }, [id]);
 
   if (!pizza) return <p>Cargando...</p>;
@@ -19,11 +17,7 @@ const Pizza = () => {
     <div className="container mt-4">
       <h1>{pizza.name}</h1>
 
-      <img
-        src={`http://localhost:5000${pizza.img}`}
-        alt={pizza.name}
-        className="img-fluid"
-      />
+      <img src={pizza.img} alt={pizza.name} className="img-fluid" />
 
       <p className="mt-3">{pizza.desc}</p>
 
