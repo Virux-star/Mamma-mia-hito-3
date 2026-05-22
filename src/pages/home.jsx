@@ -3,23 +3,22 @@ import CardPizza from "../componentes/CardPizza";
 import Header from "../componentes/Header";
 import { pizzas as pizzasData } from "../data/pizzas";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const normalizeImg = (img) => {
   if (!img) return img;
-  if (img.startsWith("http")) {
-    try {
-      return new URL(img).pathname.replace(/^\/Mamma-mia-hito-3/, "");
-    } catch {
-      return img;
-    }
-  }
-  return img.replace(/^\/Mamma-mia-hito-3/, "");
+
+  if (img.startsWith("http")) return img;
+
+  const trimmed = img.replace(/^\/+/, "");
+  return `${API_URL}/${trimmed}`;
 };
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/pizzas")
+    fetch(`${API_URL}/api/pizzas`)
       .then((res) => res.json())
       .then((data) =>
         setPizzas(
@@ -29,7 +28,14 @@ const Home = () => {
           }))
         )
       )
-      .catch(() => setPizzas(pizzasData));
+      .catch(() =>
+        setPizzas(
+          pizzasData.map((pizza) => ({
+            ...pizza,
+            img: normalizeImg(pizza.img),
+          }))
+        )
+      );
   }, []);
 
   return (

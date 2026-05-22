@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { pizzas as pizzasData } from "../data/pizzas";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const normalizeImg = (img) => {
   if (!img) return img;
-  if (img.startsWith("http")) {
-    try {
-      return new URL(img).pathname.replace(/^\/Mamma-mia-hito-3/, "");
-    } catch {
-      return img;
-    }
-  }
-  return img.replace(/^\/Mamma-mia-hito-3/, "");
+
+  if (img.startsWith("http")) return img;
+
+  const trimmed = img.replace(/^\/+/, "");
+  return `${API_URL}/${trimmed}`;
 };
 
 const Pizza = () => {
@@ -19,7 +18,7 @@ const Pizza = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/pizzas/${id}`)
+    fetch(`${API_URL}/api/pizzas/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Error fetching pizza");
         return res.json();
@@ -32,7 +31,10 @@ const Pizza = () => {
       )
       .catch(() => {
         const foundPizza = pizzasData.find((item) => item.id === id);
-        setPizza(foundPizza || null);
+        setPizza(foundPizza ? {
+          ...foundPizza,
+          img: normalizeImg(foundPizza.img),
+        } : null);
       });
   }, [id]);
 

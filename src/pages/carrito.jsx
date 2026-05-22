@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const Cart = () => {
   const { cart, increase, decrease, total } =
     useContext(CartContext);
@@ -12,7 +14,7 @@ const Cart = () => {
   const checkout = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/checkouts",
+        `${API_URL}/api/checkouts`,
         {
           method: "POST",
           headers: {

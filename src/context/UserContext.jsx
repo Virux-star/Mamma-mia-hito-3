@@ -1,5 +1,7 @@
 import { createContext, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
@@ -10,7 +12,7 @@ const UserProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+        `${API_URL}/api/auth/login`,
         {
           method: "POST",
           headers: {
@@ -37,7 +39,7 @@ const UserProvider = ({ children }) => {
   const register = async (email, password) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/register",
+        `${API_URL}/api/auth/register`,
         {
           method: "POST",
           headers: {
@@ -70,7 +72,7 @@ const UserProvider = ({ children }) => {
   const getProfile = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/me",
+        `${API_URL}/api/auth/me`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
