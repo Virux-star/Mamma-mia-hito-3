@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
+  const { login } = useContext(UserContext);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -13,7 +16,7 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!form.email || !form.password) {
@@ -26,7 +29,16 @@ const Login = () => {
       return;
     }
 
-    alert("Login exitoso 🔓");
+    try {
+      await login(form.email, form.password);
+
+      alert("Login exitoso 🔓");
+
+    } catch (error) {
+      console.log(error);
+
+      alert("Error al iniciar sesión");
+    }
   };
 
   return (
@@ -39,6 +51,7 @@ const Login = () => {
           type="email"
           name="email"
           placeholder="Email"
+          value={form.email}
           onChange={handleChange}
         />
 
@@ -47,6 +60,7 @@ const Login = () => {
           type="password"
           name="password"
           placeholder="Contraseña"
+          value={form.password}
           onChange={handleChange}
         />
 
