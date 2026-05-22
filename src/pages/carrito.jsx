@@ -3,10 +3,40 @@ import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
-  const { cart, increase, decrease, total } = useContext(CartContext);
+  const { cart, increase, decrease, total } =
+    useContext(CartContext);
 
-  // 👇 NUEVO
   const { token } = useContext(UserContext);
+
+  // 👇 CHECKOUT
+  const checkout = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/checkouts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            cart,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      alert("Compra realizada con éxito 🛒");
+
+    } catch (error) {
+      console.log(error);
+
+      alert("Error al realizar la compra");
+    }
+  };
 
   return (
     <div className="container">
@@ -18,11 +48,18 @@ const Cart = () => {
           className="d-flex justify-content-between align-items-center border-bottom py-3"
         >
           <div className="d-flex align-items-center gap-3">
-            <img src={pizza.img} alt={pizza.name} width="60" />
+            <img
+              src={pizza.img}
+              alt={pizza.name}
+              width="60"
+            />
+
             <span>{pizza.name}</span>
           </div>
 
-          <span>${pizza.price.toLocaleString("es-CL")}</span>
+          <span>
+            ${pizza.price.toLocaleString("es-CL")}
+          </span>
 
           <div>
             <button
@@ -32,7 +69,9 @@ const Cart = () => {
               -
             </button>
 
-            <span className="mx-2">{pizza.count}</span>
+            <span className="mx-2">
+              {pizza.count}
+            </span>
 
             <button
               className="btn btn-outline-primary btn-sm"
@@ -51,6 +90,7 @@ const Cart = () => {
       <button
         className="btn btn-dark mt-2"
         disabled={!token}
+        onClick={checkout}
       >
         Pagar 💳
       </button>
