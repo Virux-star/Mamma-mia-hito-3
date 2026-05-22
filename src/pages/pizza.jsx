@@ -2,13 +2,38 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { pizzas as pizzasData } from "../data/pizzas";
 
+const normalizeImg = (img) => {
+  if (!img) return img;
+  if (img.startsWith("http")) {
+    try {
+      return new URL(img).pathname.replace(/^\/Mamma-mia-hito-3/, "");
+    } catch {
+      return img;
+    }
+  }
+  return img.replace(/^\/Mamma-mia-hito-3/, "");
+};
+
 const Pizza = () => {
   const [pizza, setPizza] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    const foundPizza = pizzasData.find((item) => item.id === id);
-    setPizza(foundPizza || null);
+    fetch(`http://localhost:5000/api/pizzas/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Error fetching pizza");
+        return res.json();
+      })
+      .then((data) =>
+        setPizza({
+          ...data,
+          img: normalizeImg(data.img),
+        })
+      )
+      .catch(() => {
+        const foundPizza = pizzasData.find((item) => item.id === id);
+        setPizza(foundPizza || null);
+      });
   }, [id]);
 
   if (!pizza) return <p>Cargando...</p>;

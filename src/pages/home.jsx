@@ -3,13 +3,32 @@ import CardPizza from "../componentes/CardPizza";
 import Header from "../componentes/Header";
 import { pizzas as pizzasData } from "../data/pizzas";
 
+const normalizeImg = (img) => {
+  if (!img) return img;
+  if (img.startsWith("http")) {
+    try {
+      return new URL(img).pathname.replace(/^\/Mamma-mia-hito-3/, "");
+    } catch {
+      return img;
+    }
+  }
+  return img.replace(/^\/Mamma-mia-hito-3/, "");
+};
+
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/pizzas")
       .then((res) => res.json())
-      .then((data) => setPizzas(data))
+      .then((data) =>
+        setPizzas(
+          data.map((pizza) => ({
+            ...pizza,
+            img: normalizeImg(pizza.img),
+          }))
+        )
+      )
       .catch(() => setPizzas(pizzasData));
   }, []);
 
