@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { pizzas as pizzasData } from "../data/pizzas";
+import { CartContext } from "../context/CartContext";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -15,6 +16,7 @@ const normalizeImg = (img) => {
 
 const Pizza = () => {
   const [pizza, setPizza] = useState(null);
+  const { addToCart } = useContext(CartContext);
   const { id } = useParams();
 
   useEffect(() => {
@@ -60,7 +62,10 @@ const Pizza = () => {
         Precio: ${pizza.price.toLocaleString("es-CL")}
       </h4>
 
-      <button className="btn btn-dark mt-2">
+      <button
+        className="btn btn-dark mt-2"
+        onClick={() => addToCart({ id: pizza.id, name: pizza.name, price: pizza.price, img: pizza.img })}
+      >
         Añadir al carrito 🛒
       </button>
     </div>
